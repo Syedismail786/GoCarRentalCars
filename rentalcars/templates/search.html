@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Cars</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">GoCarRentals</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+        </ul>
+
+        <!-- Search Bar -->
+        <form class="d-flex" method="get" action="{% url 'search_cars' %}">
+            <input class="form-control me-2" type="search" placeholder="Search Cars" aria-label="Search" name="query" value="{{ query }}">
+            <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<!-- Search Results -->
+<div class="container mt-5">
+    <h3>Search Results for: "{{ query }}"</h3>
+    <div class="row">
+        {% for car in cars %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.name }}</h5>
+                        <p class="card-text">Price: ${{ car.price_per_day }} per day</p>
+                        <a href="#" class="btn btn-primary">Rent Now</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No cars found matching your search criteria.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
